@@ -9,10 +9,12 @@ function createTable(num) {
 
     for (let w = 0; w < width; w++){
 
-      if (w % 2 === 0 && h % 2 === 0 && w >= h && numItems < rowItems) {
+      if (numItems >= rowItems || w < h) {
+        cell = '-'
+      } else if (w % 2 === 0 && h % 2 === 0) {
         cell = '0'
         numItems ++
-      } else if (w % 2 === 1 && h % 2 === 1 && w >=h && numItems < rowItems) {
+      } else if (w % 2 === 1 && h % 2 === 1) {
         cell = '0'
         numItems ++ 
       } else {
