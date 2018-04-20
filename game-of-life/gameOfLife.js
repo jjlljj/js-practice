@@ -46,25 +46,18 @@ function lifeOrDeath(neighbors, currentCell) {
   
   const liveNeighbors = neighbors.filter(neighbor => neighbor === 1).length
   const isAlive = currentCell === 1
-  //live cell w fewer than two live neighbors dies
 
   if ( isAlive && liveNeighbors < 2 ) {
     return 0
   }
 
-  // live cell with two or three live neighbors lives
-
   if ( isAlive && (liveNeighbors === 2 || liveNeighbors === 3) ) {
     return 1
   }
 
-  // live cell with more than three live neighbors dies
-
   if ( isAlive && liveNeighbors > 3 ) {
     return 0
   } 
-
-  // dead cell with exact three live neighbors lives
 
   if ( !isAlive && liveNeighbors === 3 ) {
     return 1
