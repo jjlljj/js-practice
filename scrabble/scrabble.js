@@ -28,9 +28,14 @@ function best_scrabble_word(chars, char, pos) {
   if ( char ) {
     chars += char.toLowerCase()
   }
-  chars.replace(/\s/g, '.')
-  const regExp = new RegExp("^[" + chars.toLowerCase() + "]+$", "i", "g")
-  const possibleWords = dictionary.filter(word => word.match(regExp) && word.length <= chars.length)
+  chars = chars.replace(/\s/g, '.')
+  console.log(chars)
+
+  const regExp = new RegExp("^[" + format_chars(chars)+ "]+$", "i", "g")
+  //const numLet = new RegExp("["+format_chars(chars)+"]")
+  console.log(regExp)
+  const possibleWords = dictionary.filter(word => word.match(regExp) && word.length < chars.length)
+  
 
   if (char && pos) {
     const wordsWithPosition = possibleWords.filter(word =>  word[parseInt(pos)-1] == char.toLowerCase())
@@ -39,10 +44,28 @@ function best_scrabble_word(chars, char, pos) {
   return best_word(possibleWords)
 }
 
+function format_chars(chars) { 
+  const regChars = chars.toLowerCase().split('')
+  const charStack = regChars.reduce((stack, char) => {
+    if (!stack[char]) {
+      stack[char] = 1 
+    }
+    stack[char] ++
+    return stack
+  }, {})
+
+  return Object.keys(charStack).reduce((string, char) => {
+    return string +  "(" + char + ")" + `{0,${charStack[char]/2}}` 
+  }, '')
+
+}
+
 function best_word(words) {
-  return words.map(word => {
+  const scored = words.map(word => {
     return { word, score: score_word(word) }
-  }).sort((a, b) => a.score > b.score)[0]
+  }).sort((a, b) => a.score > b.score)
+
+  return scored[0]
 }
 
 function score_word(word) {
