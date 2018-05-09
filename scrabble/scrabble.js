@@ -30,10 +30,10 @@ function best_scrabble_word(chars, char, pos) {
   }
   chars = chars.replace(/\s/g, '.')
 
-  const regExp = new RegExp("^[" + chars+ "]+$", "i", "g")
-  const numLet = new RegExp("^["+format_chars(chars)+"]")
+  const posExp = new RegExp("^[" + chars+ "]+$", "i", "g")
+  const numExp = new RegExp("^["+format_chars(chars)+"]")
 
-  const possibleWords = dictionary.filter(word => word.match(regExp) && !word.match(numLet) && word.length < chars.length)
+  const possibleWords = dictionary.filter(word => word.match(posExp) && !word.match(numExp) && word.length < chars.length)
 
   if (char && pos) {
     const wordsWithPosition = possibleWords.filter(word =>  word[parseInt(pos)-1] == char.toLowerCase())
